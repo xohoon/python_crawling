@@ -6,38 +6,42 @@ import urllib.parse
 import requests
 import bs4
 
-keyword = '장애인'
+keyword = '고용부담금'
 url_keyword = urllib.parse.quote(keyword)
 page=1
+url_n = 'https://search.naver.com/search.naver?query='+url_keyword+'&where=news&ie=utf8&sm=nws_hty'
 # url_d = 'https://news.daum.net/'
 # url_d = 'https://search.daum.net/search?w=news&sort=recency&q='+url_keyword+'&cluster=n&DA=STC&s=NS&a=STCF&dc=STC&pg=1&r=1&p=1&rc=1&at=more&sd=&ed=&period='
 
 
-for i in range(1, page+1):
-    url_d = 'https://search.daum.net/search?w=news&sort=recency&q={}&cluster=n&DA=STC&s=NS&a=STCF&dc=STC&pg=1&r=1&p={}&rc=1&at=more&sd=&ed=&period='
-    # url_d = 'https://search.daum.net/search?w=news&sort=recency&q={}&cluster=n&DA=STC&s=NS&a=STCF&dc=STC&pg=1&r=1&p={}&rc=1&at=more&sd=&ed=&period='
-    real_url = url_d.format(keyword, i)
-    news = requests.get(real_url)
-    news_bs = bs4.BeautifulSoup(news.content, 'html.parser')
-    newsList = news_bs.findAll('a', {'class':'f_link_b'})
-    title_list = []
-    link_list = []
-    for d in newsList:
-        title_list.append(d.text.strip())
-        link_list.append(d.get('href'))
-print(title_list)
-print('123123121')
-print(link_list)
+# for i in range(1, page+1):
+#     # url_d = 'https://search.daum.net/search?w=news&sort=recency&q={}&cluster=n&DA=STC&s=NS&a=STCF&dc=STC&pg=1&r=1&p={}&rc=1&at=more&sd=&ed=&period='
+#     # url_d = 'https://search.daum.net/search?w=news&sort=recency&q={}&cluster=n&DA=STC&s=NS&a=STCF&dc=STC&pg=1&r=1&p={}&rc=1&at=more&sd=&ed=&period='
+#     real_url = url_d.format(keyword, i)
+#     news = requests.get(real_url)
+#     news_bs = bs4.BeautifulSoup(news.content, 'html.parser')
+#     newsList = news_bs.findAll('a', {'class':'f_link_b'})
+#     title_list = []
+#     link_list = []
+#     for d in newsList:
+#         title_list.append(d.text.strip())
+#         link_list.append(d.get('href'))
+# print(title_list)
+# print('123123121')
+# print(link_list)
 
 
-# html = urlopen(url_d)
-# soup = BeautifulSoup(html, "html.parser")
-# title = soup.findAll("div")
+html = urlopen(url_n)
+soup = BeautifulSoup(html, "html.parser")
+title = soup.findAll('a', {'class':'_sp_each_title'})
 
-# title_list = []
-# link_list = []
-# print('?'+url_keyword)
-# print(title)
+title_list = []
+link_list = []
+for d in title:
+    title_list.append(d.text.strip())
+    link_list.append(d.get('href'))
+data_n = pd.DataFrame(link_list, title_list)
+print(data_n)
 
 # # 실시간 이슈 검색어만 추출
 # searchword_list = []

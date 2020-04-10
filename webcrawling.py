@@ -30,8 +30,9 @@ def webSearching(keyword, site_name, max_page, win_addaress):
                 link_list_n.append(n.get('href'))
             page=page+1
         data_n = pd.DataFrame(link_list_n, title_list_n)
+        print(data_n)
         fileName = keyword + ' 네이버 검색결과('+str(now)+')'+now_over+'.csv'
-        data_n.to_csv(win_addaress+'/'+fileName, encoding='cp949')
+        data_n.to_csv(win_addaress+'/'+fileName, encoding='utf-8-sig')
 
     # daum
     if(site_name == 'DAUM'):
@@ -48,6 +49,6 @@ def webSearching(keyword, site_name, max_page, win_addaress):
                 title_list_d.append(d.text.strip())
                 link_list_d.append(d.get('href'))
             page=page+1
-        data_d = pd.DataFrame(title_list_d, link_list_d)
+        data_d = pd.DataFrame(link_list_d, title_list_d)
         fileName = keyword+' 다음 검색결과('+str(now)+')'+now_over+'.csv'
-        data_d.to_csv(win_addaress+'/'+fileName, encoding='cp949')
+        data_d.to_csv(win_addaress+'/'+fileName, encoding='utf-8-sig')
