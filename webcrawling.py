@@ -50,5 +50,6 @@ def webSearching(keyword, site_name, max_page, win_addaress):
                 link_list_d.append(d.get('href'))
             page=page+1
         data_d = pd.DataFrame(link_list_d, title_list_d)
+        print(data_d)
         fileName = keyword+' 다음 검색결과('+str(now)+')'+now_over+'.csv'
         data_d.to_csv(win_addaress+'/'+fileName, encoding='utf-8-sig')
